@@ -1,0 +1,42 @@
+-------------------------------------------------------------------
+Username: achbogga
+Assignment: a11
+-------------------------------------------------------------------
+Grader: jason
+Grade: S+
+-------------------------------------------------------------------
+Scale:
+S+	Great work.
+S	Better than average.
+S-	Below average, with frequent mistakes. Some problems may not be
+	attempted.
+U	Unacceptable. Code which does not
+	compile in Racket without error or warning receives a U.
+N	Not turned in, or turned in after the due date
+-------------------------------------------------------------------
+Comments:
+
+For all-modes performance considerations, you'll generally want to
+have that last constraint *before* the recursive calls.
+
+     ((fresh (e1 e2 t1 t2)
+       (== `(cons ,e1 ,e2) e)
+       (!- G e1 t1)
+       (!- G e2 t2)
+       (== `(pairof ,t1 ,t2) t)))
+
+-------------------------------------------------------------------
+--------------------
+a11 > !- > !- 38
+!- 38
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+'()
+'((pairof Nat Nat))
+expected:   '((pairof Nat Nat))
+tested:     (run* (q) (!- (quote ()) (quote (let ((f (lambda (x) x))) (if (f #t) (f (cons (f 4) 5)) (f (cons 5 (f 6)))))) q))
+Check failure
+--------------------
+66 success(es) 1 failure(s) 0 error(s) 67 test(s) run

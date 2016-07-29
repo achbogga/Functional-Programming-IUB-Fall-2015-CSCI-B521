@@ -1,0 +1,49 @@
+-------------------------------------------------------------------
+Username: achbogga
+Assignment: a13
+-------------------------------------------------------------------
+Grader: jason
+Grade: S+
+-------------------------------------------------------------------
+Scale:
+S+	Great work.
+S	Better than average.
+S-	Below average, with frequent mistakes. Some problems may not be
+	attempted.
+U	Unacceptable. Code which does not
+	compile in Racket without error or warning receives a U.
+N	Not turned in, or turned in after the due date
+-------------------------------------------------------------------
+Comments:
+
+   ((=/= lis '())
+      (fresh (a d)
+             (== `(,a . ,d) lis) (listo d)))
+
+You don't need the =/= because you unify it with a pair.
+
+             (minuso num (build-num 1) sub1num)
+             (fibso sub1num result1 result2)
+             (pluso result1 result2 ad)
+             (== result2 o1)
+             (== ad o2)
+
+You're gonna want the ==s above these serious calls.
+
+I don't think your tsil line is right
+
+      [(fresh (car_a cdr_a args)
+         (== `(,car_a ,cdr_a) args)
+         (== `(,car_a ,cdr_a tsil) exp)
+         (absento 'tsil vars)
+         (fo-lavo-o args vars valis o))]
+
+        (absento c0 c2)
+
+Absento takes a list in its arguments. Specifically, in the 2nd
+argument. It'd be a lot shorter/easier to read to use that.
+
+
+
+
+-------------------------------------------------------------------

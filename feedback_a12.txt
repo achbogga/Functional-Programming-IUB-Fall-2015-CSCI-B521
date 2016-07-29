@@ -1,0 +1,72 @@
+-------------------------------------------------------------------
+Username: achbogga
+Assignment: a12
+-------------------------------------------------------------------
+Grader: jason
+Grade: S
+-------------------------------------------------------------------
+Scale:
+S+	Great work.
+S	Better than average.
+S-	Below average, with frequent mistakes. Some problems may not be
+	attempted.
+U	Unacceptable. Code which does not
+	compile in Racket without error or warning receives a U.
+N	Not turned in, or turned in after the due date
+-------------------------------------------------------------------
+Comments:
+
+(lambda (d) `(,(* d d) . (,d)))
+
+This needs to have a call to return. You shouldn't be creating monadic values by hand.
+
+`(__ . ,(+ s 1))
+
+Ditto
+
+(bind-cont (apply-env env x) (lambda (d) (return-cont d)))
+
+can be just
+
+(apply-env env x)
+
+Make sure you see why.
+
+This holds for several places. Any time your second argument to a bind is something like
+
+(lambda (d) (return-cont d))
+
+Then you can remove the call to bind and the argument.
+
+
+-------------------------------------------------------------------
+---------------
+We have added or changed the following definition:
+
+(define fact-5
+  '((lambda (f) ((f f) 5))
+    (lambda (f) (lambda (n) (if (zero? n) 1 (* n ((f f) (sub1 n))))))))
+
+---------------
+---------------
+We have added or changed the following definition:
+
+(redefine capture-fun1 '(* 3 (capture q (* 2 (return 4 q)))))
+
+---------------
+---------------
+We have added or changed the following definition:
+
+(redefine capture-fun2 '(* 2 (capture cc (* 5 (return (* 2 6) cc)))))
+
+---------------
+--------------------
+a12 > same-fringe > yield-cont undefined
+yield-cont undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:466:16
+params:     #<procedure:temp313>
+Check failure
+--------------------
+32 success(es) 1 failure(s) 0 error(s) 33 test(s) run

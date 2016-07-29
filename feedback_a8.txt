@@ -1,0 +1,27 @@
+-------------------------------------------------------------------
+Username: achbogga
+Assignment: a8
+-------------------------------------------------------------------
+Grader: jason
+Grade: S+
+-------------------------------------------------------------------
+Scale:
+S+	Great work.
+S	Better than average.
+S-	Below average, with frequent mistakes. Some problems may not be
+	attempted.
+U	Unacceptable. Code which does not
+	compile in Racket without error or warning receives a U.
+N	Not turned in, or turned in after the due date
+-------------------------------------------------------------------
+Comments:
+
+Okay, a valiant attempt at the rampoline, but ... side effects? If
+you've gotta use one of those, we'll tell ya :-P And you didd'nt need
+to use the trampoline, but it looks like you figured that
+out. "Procedure_Call", huh? My, you *are* getting into the spirit of
+imperative programming.
+
+
+
+-------------------------------------------------------------------

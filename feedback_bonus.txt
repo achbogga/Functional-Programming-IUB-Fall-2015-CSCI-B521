@@ -1,0 +1,134 @@
+-------------------------------------------------------------------
+Username: achbogga
+Assignment: bonus
+-------------------------------------------------------------------
+Grader: jason
+Grade: S
+-------------------------------------------------------------------
+Scale:
+S+	Great work.
+S	Better than average.
+S-	Below average, with frequent mistakes. Some problems may not be
+	attempted.
+U	Unacceptable. Code which does not
+	compile in Racket without error or warning receives a U.
+N	Not turned in, or turned in after the due date
+-------------------------------------------------------------------
+Comments:
+
+You know, I was never sure if you actually *had* to start with #lang
+racket at the top, or if that just had to be your first command. I
+guess it makes sense that comments and whitespace are skipped by the
+reader.
+
+This logic can be much simplified.
+
+    ((_ v0) (if (or (number? v0) (symbol? v0)) v0 (if v0 #t #f)))
+
+Remember all non-#f values in Racket are 'truthy'. So this should just be:
+
+v0
+
+Make sure you can tell me why that's correct.
+
+filter*-sps I think has a logic error in it, and macro-map I believe
+you're pattern matching on the wrong sorts of arguments. 
+
+That's a formidable try on mcond, but it should be somewhat shorter.
+
+
+
+
+-------------------------------------------------------------------
+--------------------
+bonus > filter*-sps > filter*-sps 2
+filter*-sps 2
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+'((((4 (4) 6 ((2)) (4) 6) 0) 2) 1 5 7 9)
+'((((4 (4) 6 ((2)) (4) 6) 0) 2) (1 (() 5 (7 () 9) ())))
+expected:   '((((4 (4) 6 ((2)) (4) 6) 0) 2) (1 (() 5 (7 () 9) ())))
+tested:     (let-values (((a d) (filter*-sps even? (quote ((1 (4 (4) 5 6 (7 (2) 9) (4) 6) 0) 2)) (quote ())))) (cons a d))
+Check failure
+--------------------
+--------------------
+bonus > filter*-sps > filter*-sps 3
+filter*-sps 3
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+'((1 (3 (5)) 7) 2 4 6)
+'((1 (3 (5)) 7) (2 (4)) 6)
+expected:   '((1 (3 (5)) 7) (2 (4)) 6)
+tested:     (let-values (((a d) (filter*-sps odd? (quote (1 (2 3 (4 5)) 6 7)) (quote ())))) (cons a d))
+Check failure
+--------------------
+--------------------
+bonus > filter*-sps > filter*-sps 4
+filter*-sps 4
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+'(((2 (4)) 6 ((8 9) 10)) 1 3 5 7)
+'(((2 (4)) 6 ((8 9) 10)) 1 (3 (5)) 7 (()))
+expected:   '(((2 (4)) 6 ((8 9) 10)) 1 (3 (5)) 7 (()))
+tested:     (let-values (((a d) (filter*-sps (lambda (x) (or (even? x) (< 7 x))) (quote (1 (2 3 (4 5)) 6 7 ((8 9) 10))) (quote ())))) (cons a d))
+Check failure
+--------------------
+'(define-syntax copy-code (syntax-rules () ((_ x) `(,x x))))
+'(define-syntax quote-quote (syntax-rules () ((_ e) ''e)))
+--------------------
+bonus > macro-map > macro-map 1
+macro-map 1
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+'((trinidad and tobago)
+  ((saint vincent and the grenadines) ((antigua and barbuda))))
+'((trinidad and tobago)
+  (saint vincent and the grenadines)
+  (antigua and barbuda))
+expected:   '((trinidad and tobago)
+  (saint vincent and the grenadines)
+  (antigua and barbuda))
+tested:     (macro-map quote (quote ((trinidad and tobago) (saint vincent and the grenadines) (antigua and barbuda))))
+Check failure
+--------------------
+--------------------
+bonus > macro-map > macro-map 2
+macro-map 2
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+'((5 ((lambda (x) x) 5))
+  ((7 ((lambda (x) (+ 2 x)) 5)) ((7 ((lambda (x) 7) 5)))))
+'((5 ((lambda (x) x) 5)) (7 ((lambda (x) (+ 2 x)) 5)) (7 ((lambda (x) 7) 5)))
+expected:   '((5 ((lambda (x) x) 5)) (7 ((lambda (x) (+ 2 x)) 5)) (7 ((lambda (x) 7) 5)))
+tested:     (let-syntax ((copy-code (syntax-rules () ((_ x) (quasiquote ((unquote x) x)))))) (macro-map copy-code (quote (((lambda (x) x) 5) ((lambda (x) (+ 2 x)) 5) ((lambda (x) 7) 5)))))
+Check failure
+--------------------
+--------------------
+bonus > macro-map > macro-map 3
+macro-map 3
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+'('(trinidad and tobago)
+  ('(saint vincent and the grenadines) ('(antigua and barbuda))))
+'('(trinidad and tobago)
+  '(saint vincent and the grenadines)
+  '(antigua and barbuda))
+expected:   '('(trinidad and tobago)
+  '(saint vincent and the grenadines)
+  '(antigua and barbuda))
+tested:     (let-syntax ((quote-quote (syntax-rules () ((_ e) (quote (quote e)))))) (macro-map quote-quote (quote ((trinidad and tobago) (saint vincent and the grenadines) (antigua and barbuda)))))
+Check failure
+--------------------
+27 success(es) 6 failure(s) 0 error(s) 33 test(s) run

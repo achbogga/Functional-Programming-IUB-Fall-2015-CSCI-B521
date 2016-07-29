@@ -1,0 +1,84 @@
+-------------------------------------------------------------------
+Username: achbogga
+Assignment: a4
+-------------------------------------------------------------------
+Grader: jason
+Grade: S+
+-------------------------------------------------------------------
+Scale:
+S+	Great work.
+S	Better than average.
+S-	Below average, with frequent mistakes. Some problems may not be
+	attempted.
+U	Unacceptable. Code which does not
+	compile in Racket without error or warning receives a U.
+N	Not turned in, or turned in after the due date
+-------------------------------------------------------------------
+Comments:
+
+
+(define empty-env-fn empty-env)
+(define empty-env-ds empty-env)
+(define extend-env-fn extend-env)
+(define extend-env-ds extend-env)
+(define apply-env-fn apply-env)
+(define apply-env-ds apply-env)
+
+
+These seem unlikely to be correct.
+
+                           ((loop env) rator)
+                           ((loop env) rand)
+                           extend-env
+
+This I was not expecting.
+
+
+Your interpreters are long. No harm if you like it this way. But I
+think you can use 80 char width minimum before anyone should begin to
+complain.
+
+
+-------------------------------------------------------------------
+poor-fact '(((lambda (f)
+                (lambda (n) (if (zero? n) 1 (* n ((f f) (sub1 n))))))
+              (lambda (f)
+                (lambda (n) (if (zero? n) 1 (* n ((f f) (sub1 n)))))))
+             5)
+--------------------
+A4 > value-of-ri > value-of-ri 1
+value-of-ri 1
+ERROR
+expected:   120
+tested:     ((value-of-ri empty-env-fn extend-env-fn apply-env-fn closure-fn-ri apply-closure-fn-ri) poor-fact)
+evaluator: terminated (out-of-memory)
+
+--------------------
+--------------------
+A4 > value-of-ri > value-of-ri 2
+value-of-ri 2
+ERROR
+expected:   120
+tested:     ((value-of-ri empty-env-fn extend-env-fn apply-env-fn closure-fn-ri apply-closure-fn-ri) poor-fact)
+evaluator: terminated (out-of-memory)
+
+--------------------
+--------------------
+A4 > value-of-ri > value-of-ri 3
+value-of-ri 3
+ERROR
+expected:   120
+tested:     ((value-of-ri empty-env-fn extend-env-fn apply-env-fn closure-fn-ri apply-closure-fn-ri) poor-fact)
+evaluator: terminated (out-of-memory)
+
+--------------------
+--------------------
+A4 > value-of-ri > value-of-ri 4
+value-of-ri 4
+ERROR
+expected:   120
+tested:     ((value-of-ri empty-env-fn extend-env-fn apply-env-fn closure-fn-ri apply-closure-fn-ri) poor-fact)
+evaluator: terminated (out-of-memory)
+
+--------------------
+18 success(es) 0 failure(s) 4 error(s) 22 test(s) run

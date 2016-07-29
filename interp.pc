@@ -1,0 +1,120 @@
+;;#lang racket
+;;(require "parenthec.rkt")
+
+;;step 8 and step 9
+(define-program-counter pc)
+(define-registers exp env k v y cl a)
+
+
+(define-union expr
+  (const cexp)
+  (var n)
+  (if test conseq alt)
+  (mult nexp1 nexp2)
+  (sub1 nexp)
+  (zero nexp)
+  (capture body)
+  (return kexp vexp)
+  (let exp body)              
+  (lambda body)
+  (app rator rand))
+
+(define-union kont
+  (empty-k jumpout)
+  (mult-k-outer x2^ env^ k^)
+  (mult-k-inner v^ env^ k^)
+  (sub-k k^)
+  (zero-k k^)
+  (if-k conseq^ alt^ env^ k^)
+  (ret-k v-exp^ env^)
+  (let-k-outer body^ env^ k^)
+  (app-k-outer rand^ env^ k^)
+  (app-k-inner k^^ k^))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-label value-of-cps
+    (union-case exp expr
+      [(const cexp0) (begin (set! k k) (set! v cexp0) (set! pc apply-k))]
+      [(var n1) (begin (set! k k) (set! env env) (set! y n1)  (set! pc apply-env))]
+      [(mult nexp12 nexp22) (begin (set! k (kont_mult-k-outer nexp22 env k))  (set! exp nexp12)(set! env env) (set! pc value-of-cps))]
+      [(sub1 nexp3)  (begin (set! k (kont_sub-k k)) (set! exp nexp3)(set! env env) (set! pc value-of-cps))]
+      [(zero nexp4)  (begin (set! k (kont_zero-k k)) (set! exp nexp4)(set! env env) (set! pc value-of-cps))]
+      [(if test5 conseq5 alt5) (begin (set! k (kont_if-k conseq5 alt5 env k)) (set! exp test5)(set! env env) (set! pc value-of-cps))]
+      [(capture  body6) (begin (set! k k) (set! exp body6)(set! env (en_extend-env env k)) (set! pc value-of-cps))]      
+      [(return kexp7 vexp7) (begin (set! k (kont_ret-k vexp7 env))  (set! exp kexp7)(set! env env) (set! pc value-of-cps))]
+      [(let exp8 body8) (begin (set! k (kont_let-k-outer body8 env k))  (set! exp exp8)(set! env env) (set! pc value-of-cps))]
+      [(lambda body9)  (begin (set! k k)(set! v (clos_closure body9 env)) (set! pc apply-k))]
+      [(app rator10 rand10)   (begin (set! k (kont_app-k-outer rand10 env k)) (set! exp rator10)(set! env env)  (set! pc value-of-cps))]))
+
+(define-label apply-k
+    (union-case k kont
+      [(empty-k jumpout) (dismount-trampoline jumpout)]
+      [(mult-k-outer x2^1 env^1 k^1) (begin (set! k (kont_mult-k-inner v env^1 k^1))  (set! exp x2^1)(set! env env^1) (set! pc value-of-cps))]
+      [(mult-k-inner v^2 env^2 k^2) (begin (set! k k^2)(set! v (* v^2 v )) (set! pc apply-k))]
+      [(sub-k k^3) (begin (set! k k^3)(set! v (sub1 v)) (set! pc apply-k))]
+      [(zero-k k^4) (begin (set! k k^4)(set! v (zero? v)) (set! pc apply-k))]
+      [(if-k conseq^5 alt^5 env^5 k^5) (if v (begin (set! k k^5) (set! exp conseq^5)(set! env env^5) (set! pc value-of-cps)) (begin (set! k k^5) (set! exp alt^5)(set! env env^5) (set! pc value-of-cps)))]
+      [(ret-k vexp^6 env^6) (begin (set! k v) (set! exp vexp^6)(set! env env^6) (set! pc value-of-cps))]
+      [(let-k-outer body^7 env^7 k^7) (begin (set! k k^7) (set! exp body^7)(set! env (en_extend-env env^7 v)) (set! pc value-of-cps))]
+      [(app-k-outer rand^8 env^8 k^8) (begin (set! k (kont_app-k-inner v k^8)) (set! exp rand^8)(set! env env^8) (set! pc value-of-cps))]
+      [(app-k-inner k^^9 k^9) (begin (set! k k^9) (set! cl k^^9)(set! a v) (set! pc apply-closure))]
+      ))
+
+
+
+(define-union en
+  (empty-env)
+  (extend-env env^ a^))
+  
+(define-label apply-env
+   (union-case env en
+      [(empty-env) (error 'value-of-cps "unbound identifier")]
+      [(extend-env env^10 a^10) (if (zero? y) (begin (set! k k)(set! v a^10) (set! pc apply-k)) (begin (set! k k) (set! env env^10)(set! y (sub1 y)) (set! pc apply-env)))]
+   ))
+
+
+
+(define-union clos
+  (closure body env))
+
+(define-label apply-closure
+    (union-case cl clos
+      [(closure body11 env11) (begin (set! k k) (set! exp body11)(set! env (en_extend-env env11 a)) (set! pc value-of-cps))]))
+;>(value-of-cps (lex (let ((square (lambda (x) (* x x)))) ((lambda (y) (+ (square y) (square y))) 5)) '()) empty-env (empty-k))
+;50
+
+#|
+> (value-of-cps (lex (letrec ((fib (lambda (n)
+    (cond
+      ((< n 2) n)
+      (else
+       (+ (fib (- n 1))
+          (fib (- n 2)))))))
+) ((lambda (y) (+ (fib y) (fib y))) 5)) '()) empty-env (empty-k))
+10
+|#
+
+(define-label main;; Modified the main to run after registerization but the program runs out of memory!!! 
+    (begin
+      ;(set! k (kont_empty-k))
+      (set! exp
+     (expr_let 
+      (expr_lambda
+       (expr_lambda 
+        (expr_if
+         (expr_zero (expr_var 0))
+         (expr_const 1)
+         (expr_mult (expr_var 0) (expr_app (expr_app (expr_var 1) (expr_var 1)) (expr_sub1 (expr_var 0)))))))
+      (expr_mult
+       (expr_capture
+        (expr_app
+         (expr_app (expr_var 1) (expr_var 1))
+         (expr_return (expr_var 0) (expr_app (expr_app (expr_var 1) (expr_var 1)) (expr_const 4)))))
+       (expr_const 5))))
+     (set! env (en_empty-env))
+     
+     (set! pc value-of-cps)
+     (mount-trampoline kont_empty-k k pc)
+     (printf "~s\n" v)
+     ))

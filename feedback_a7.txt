@@ -1,0 +1,61 @@
+-------------------------------------------------------------------
+Username: achbogga
+Assignment: a7
+-------------------------------------------------------------------
+Grader: jason
+Grade: S
+-------------------------------------------------------------------
+Scale:
+S+	Great work.
+S	Better than average.
+S-	Below average, with frequent mistakes. Some problems may not be
+	attempted.
+U	Unacceptable. Code which does not
+	compile in Racket without error or warning receives a U.
+N	Not turned in, or turned in after the due date
+-------------------------------------------------------------------
+Comments:
+
+Lemme see if I can see what gotcha stuck. Got it.
+
+[`(var ,expr) (apply-k k env expr)]
+
+this should be (env expr k). Your environment is a function of two arguments.
+
+Likewise, here, (apply-k k (v w)), you want (v w k).
+
+I think with those little bits fixed you'll be on your way. 
+-------------------------------------------------------------------
+--------------------
+a7 > value-of-cps > value-of-cps undefined
+value-of-cps undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:466:16
+params:     #<procedure:temp325>
+message:    "Exception raised"
+exception-me"value-of-cps: undefined;\n cannot reference an identifier before its definition\n  in module: 'a7"
+exception:  #(struct:exn:fail:contract:variable "value-of-cps: undefined;\n cannot reference an identifier before its definition\n  in module: 'a7" #<continuation-mark-set> value-of-cps)
+Check failure
+--------------------
+---------------
+We have added or changed the following definition:
+
+(define car$ car)
+
+---------------
+---------------
+We have added or changed the following definition:
+
+(define cdr$ (lambda ($) (force (cdr $))))
+
+---------------
+---------------
+We have added or changed the following definition:
+
+(define take$
+  (lambda (n $)
+    (cond ((zero? n) '()) (else (cons (car$ $) (take$ (sub1 n) (cdr$ $)))))))
+
+---------------
+28 success(es) 1 failure(s) 0 error(s) 29 test(s) run

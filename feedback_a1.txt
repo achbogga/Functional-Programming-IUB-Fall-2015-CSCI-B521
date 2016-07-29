@@ -1,0 +1,309 @@
+-------------------------------------------------------------------
+Username: achbogga
+Assignment: a1
+-------------------------------------------------------------------
+Grader: jason
+Grade: 
+-------------------------------------------------------------------
+Scale:
+S+	Great work.
+S	Better than average.
+S-	Below average, with frequent mistakes. Some problems may not be
+	attempted.
+U	Unacceptable. Code which does not
+	compile in Racket without error or warning receives a U.
+N	Not turned in, or turned in after the due date
+-------------------------------------------------------------------
+Comments:
+
+-------------------------------------------------------------------
+--------------------
+A1: > member- > member-?* 3
+member-?* 3
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:488:12
+params:     #<procedure:equal?>
+#f
+#t
+expected:   #t
+tested:     (member-?* (quote ((a ((?)) ((c) b c)))))
+Check failure
+--------------------
+--------------------
+A1: > binary->natural > binary->natural 1
+binary->natural 1
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:488:12
+params:     #<procedure:equal?>
+1
+0
+expected:   0
+tested:     (binary->natural (quote (0)))
+Check failure
+--------------------
+--------------------
+A1: > binary->natural > binary->natural 4
+binary->natural 4
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:488:12
+params:     #<procedure:equal?>
+66185228434044942951864067458396061614989522267577311297802947435570493724401440549267868490798926773634494383968047143923956857140205406402740536087446083831052036848232439995904404992798007514718326043410570379830870463780085260619444417205199197123751210704970352727833755425876102776028267313405809429548880554782040765277562828362884238325465448520348307574943345990309941642666926723379729598185834735054732500415409883868361423159913770812218772711901772249553153402287759789517121744336755350465901655205184917370974202405586941211065395540765567663193297173367254230313612244182941999500402388195450053080385546
+15
+expected:   15
+tested:     (binary->natural (quote (1 1 1 1)))
+Check failure
+--------------------
+--------------------
+A1: > binary->natural > binary->natural 5
+binary->natural 5
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:488:12
+params:     #<procedure:equal?>
+2097172
+21
+expected:   21
+tested:     (binary->natural (quote (1 0 1 0 1)))
+Check failure
+--------------------
+--------------------
+A1: > binary->natural > binary->natural 6
+binary->natural 6
+ERROR
+expected:   8191
+tested:     (binary->natural (quote (1 1 1 1 1 1 1 1 1 1 1 1 1)))
+evaluator: terminated (out-of-memory)
+
+--------------------
+--------------------
+A1: > minus > minus undefined
+minus undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp679>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > div > div undefined
+div undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp706>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > set-difference > set-difference undefined
+set-difference undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp729>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > powerset > powerset undefined
+powerset undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp755>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > cartesian-product > cartesian-product undefined
+cartesian-product undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp783>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > insertR-fr > insertR-fr undefined
+insertR-fr undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp813>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > count-?s-fr > count-?s-fr undefined
+count-?s-fr undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp862>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > filter-fr > filter-fr undefined
+filter-fr undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp916>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > zip-fr > zip-fr undefined
+zip-fr undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp974>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > map-fr > map-fr undefined
+map-fr undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp1029>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > append-fr > append-fr undefined
+append-fr undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp1078>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > reverse-fr > reverse-fr undefined
+reverse-fr undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp1124>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > binary->natural-fr > binary->natural-fr undefined
+binary->natural-fr undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp1172>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > append-map-fr > append-map-fr undefined
+append-map-fr undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp1219>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > set-difference-fr > set-difference-fr undefined
+set-difference-fr undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp1242>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > powerset-fr > powerset-fr undefined
+powerset-fr undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp1268>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > cartesian-product-fr > cartesian-product-fr undefined
+cartesian-product-fr undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp1296>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > collatz > collatz undefined
+collatz undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp1322>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+--------------------
+A1: > quine > quine undefined
+quine undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:467:16
+params:     #<procedure:temp1354>
+message:    "Exception raised"
+exception-me"evaluator: terminated (out-of-memory)"
+exception:  #(struct:exn:fail:sandbox-terminated "evaluator: terminated (out-of-memory)" #<continuation-mark-set> out-of-memory)
+Check failure
+--------------------
+69 success(es) 23 failure(s) 1 error(s) 93 test(s) run

@@ -1,0 +1,199 @@
+-------------------------------------------------------------------
+Username: achbogga
+Assignment: a6
+-------------------------------------------------------------------
+Grader: jason
+Grade: S
+-------------------------------------------------------------------
+Scale:
+S+	Great work.
+S	Better than average.
+S-	Below average, with frequent mistakes. Some problems may not be
+	attempted.
+U	Unacceptable. Code which does not
+	compile in Racket without error or warning receives a U.
+N	Not turned in, or turned in after the due date
+-------------------------------------------------------------------
+Comments:
+Those look great.
+
+[(remv-first-9*-cps (car ls) (lambda (v1) (k (equal? (car ls) v1)))) (remv-first-9*-cps (cdr ls) (λ(v) (k (cons (car ls) v))))]
+
+You have a serious call herestill in non-tail position. Once you get the answer, you still condition on what to do with it.
+
+(λ(v)(k cons v (cdr ls)))
+
+Can't be you take cons as an argument here.
+
+                         (lambda (v)
+                           (k v))
+
+There's a shorter way to write that.
+
+             (if s (unify-cps (find (cdr u) s) (find (cdr v) s) s k) #f)
+
+The finds are serious calls in non-tail position Also (k #f)
+
+  ((M-cps car-cps (empty-k)) '((1 2) (3 4) (5 6)) (empty-k))
+
+(empty-k) twice. Shouldn't be.
+
+Ditto  use-of-strange-cps
+
+
+-------------------------------------------------------------------
+---------------
+We have added or changed the following definition:
+
+(redefine
+ binary-to-decimal-cps-driver
+ (lambda (ls) (binary-to-decimal-cps ls (empty-k))))
+
+---------------
+---------------
+We have added or changed the following definition:
+
+(define empty-k
+  (lambda ()
+    (let ((once-only #f))
+      (lambda (v)
+        (if once-only
+          (error 'empty-k "You can only invoke the empty continuation once")
+          (begin (set! once-only #t) v))))))
+
+---------------
+---------------
+We have added or changed the following definition:
+
+(redefine
+ remv-first-9*-cps-driver
+ (lambda (ls) (remv-first-9*-cps ls (empty-k))))
+
+---------------
+--------------------
+A6 > remv-first-9*-cps > remv-first-9*-cps 2
+remv-first-9*-cps 2
+ERROR
+#<procedure>: arity mismatch;
+ the expected number of arguments does not match the given number
+  expected: 1
+  given: 3
+  arguments...:
+   #<procedure:cons>
+   '()
+   '()
+
+--------------------
+--------------------
+A6 > remv-first-9*-cps > remv-first-9*-cps 3
+remv-first-9*-cps 3
+ERROR
+empty-k: You can only invoke the empty continuation once
+
+--------------------
+--------------------
+A6 > remv-first-9*-cps > remv-first-9*-cps 4
+remv-first-9*-cps 4
+ERROR
+#<procedure>: arity mismatch;
+ the expected number of arguments does not match the given number
+  expected: 1
+  given: 3
+  arguments...:
+   #<procedure:cons>
+   '(a b)
+   '(9)
+
+--------------------
+--------------------
+A6 > unify-cps > unify-cps 2
+unify-cps 2
+ERROR
+unify-cps: arity mismatch;
+ the expected number of arguments does not match the given number
+  expected: 4
+  given: 3
+  arguments...:
+   #<procedure>
+   #<procedure>
+   '()
+
+--------------------
+--------------------
+A6 > unify-cps > unify-cps 5
+unify-cps 5
+ERROR
+unify-cps: arity mismatch;
+ the expected number of arguments does not match the given number
+  expected: 4
+  given: 3
+  arguments...:
+   #<procedure>
+   #<procedure>
+   '()
+
+--------------------
+--------------------
+A6 > unify-cps > unify-cps 6
+unify-cps 6
+ERROR
+unify-cps: arity mismatch;
+ the expected number of arguments does not match the given number
+  expected: 4
+  given: 3
+  arguments...:
+   #<procedure>
+   #<procedure>
+   '((3 . z))
+
+--------------------
+---------------
+We have added or changed the following definition:
+
+(redefine
+ testing-almost-length-cps
+ (lambda (f k)
+   (k
+    (lambda (ls k)
+      (if (null? ls) (k 0) (f (cdr ls) (lambda (v) (k (add1 v)))))))))
+
+---------------
+---------------
+We have added or changed the following definition:
+
+(redefine empty-l (lambda () (lambda (v) (v '(1 2 3 4 5) (empty-k)))))
+
+---------------
+---------------
+We have added or changed the following definition:
+
+(redefine
+ testing-almost-length-cps-cps
+ (lambda (f c k)
+   (c
+    (lambda (ls c k)
+      (if (null? ls) (c 0 k) (f (cdr ls) (lambda (v k) (c (add1 v) k)) k)))
+    k)))
+
+---------------
+---------------
+We have added or changed the following definition:
+
+(redefine
+ empty-c
+ (lambda () (lambda (v k) (v '(1 2 3 4 5) (lambda (v k) (k v)) k))))
+
+---------------
+--------------------
+A6 > why-cps-cps > why-cps-cps undefined
+why-cps-cps undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:466:16
+params:     #<procedure:temp757>
+message:    "Exception raised"
+exception-me"why-cps-cps: undefined;\n cannot reference an identifier before its definition\n  in module: 'a6"
+exception:  #(struct:exn:fail:contract:variable "why-cps-cps: undefined;\n cannot reference an identifier before its definition\n  in module: 'a6" #<continuation-mark-set> why-cps-cps)
+Check failure
+--------------------
+74 success(es) 1 failure(s) 6 error(s) 81 test(s) run

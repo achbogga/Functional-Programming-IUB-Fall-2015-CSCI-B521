@@ -1,0 +1,125 @@
+-------------------------------------------------------------------
+Username: achbogga
+Assignment: a2
+-------------------------------------------------------------------
+Grader: jason
+Grade: 
+-------------------------------------------------------------------
+Scale:
+S+	Great work.
+S	Better than average.
+S-	Below average, with frequent mistakes. Some problems may not be
+	attempted.
+U	Unacceptable. Code which does not
+	compile in Racket without error or warning receives a U.
+N	Not turned in, or turned in after the due date
+-------------------------------------------------------------------
+Comments:
+
+-------------------------------------------------------------------
+--------------------
+a2 > lambda->lumbda 4
+lambda->lumbda 4
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+'(lumbda (lumbda) lumbda)
+'(lumbda (lambda) lambda)
+expected:   '(lumbda (lambda) lambda)
+tested:     (lambda->lumbda (quote (lambda (lambda) lambda)))
+Check failure
+--------------------
+--------------------
+a2 > lambda->lumbda 5
+lambda->lumbda 5
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+'((lumbda (lumbda) lumbda) (lumbda (y) y))
+'((lumbda (lambda) lambda) (lumbda (y) y))
+expected:   '((lumbda (lambda) lambda) (lumbda (y) y))
+tested:     (lambda->lumbda (quote ((lambda (lambda) lambda) (lambda (y) y))))
+Check failure
+--------------------
+--------------------
+a2 > var-occurs-bound? 2
+var-occurs-bound? 2
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+#f
+#t
+expected:   #t
+tested:     (var-occurs-bound? (quote x) (quote (lambda (x) x)))
+Check failure
+--------------------
+--------------------
+a2 > unique-free-vars 5
+unique-free-vars 5
+ERROR
+match: no matching clause for '()
+
+--------------------
+--------------------
+a2 > unique-free-vars 6
+unique-free-vars 6
+ERROR
+car: contract violation
+  expected: pair?
+  given: 'y
+
+--------------------
+--------------------
+a2 > unique-free-vars 7
+unique-free-vars 7
+ERROR
+match: no matching clause for '()
+
+--------------------
+--------------------
+a2 > unique-free-vars 10
+unique-free-vars 10
+ERROR
+match: no matching clause for '(lambda () (lambda () (() z)))
+
+--------------------
+--------------------
+a2 > lex undefined
+lex undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:466:16
+params:     #<procedure:temp759>
+message:    "Exception raised"
+exception-me"lex: undefined;\n cannot reference an identifier before its definition\n  in module: 'a2"
+exception:  #(struct:exn:fail:contract:variable "lex: undefined;\n cannot reference an identifier before its definition\n  in module: 'a2" #<continuation-mark-set> lex)
+Check failure
+--------------------
+--------------------
+a2 > walk-symbol-update undefined
+walk-symbol-update undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:466:16
+params:     #<procedure:temp818>
+message:    "Exception raised"
+exception-me"walk-symbol-update: undefined;\n cannot reference an identifier before its definition\n  in module: 'a2"
+exception:  #(struct:exn:fail:contract:variable "walk-symbol-update: undefined;\n cannot reference an identifier before its definition\n  in module: 'a2" #<continuation-mark-set> walk-symbol-update)
+Check failure
+--------------------
+--------------------
+a2 > var-occurs-both? undefined
+var-occurs-both? undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:466:16
+params:     #<procedure:temp884>
+message:    "Exception raised"
+exception-me"var-occurs-both?: undefined;\n cannot reference an identifier before its definition\n  in module: 'a2"
+exception:  #(struct:exn:fail:contract:variable "var-occurs-both?: undefined;\n cannot reference an identifier before its definition\n  in module: 'a2" #<continuation-mark-set> var-occurs-both?)
+Check failure
+--------------------
+72 success(es) 6 failure(s) 4 error(s) 82 test(s) run

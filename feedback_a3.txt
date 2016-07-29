@@ -1,0 +1,156 @@
+-------------------------------------------------------------------
+Username: achbogga
+Assignment: a3
+-------------------------------------------------------------------
+Grader: jason
+Grade: S
+-------------------------------------------------------------------
+Scale:
+S+	Great work.
+S	Better than average.
+S-	Below average, with frequent mistakes. Some problems may not be
+	attempted.
+U	Unacceptable. Code which does not
+	compile in Racket without error or warning receives a U.
+N	Not turned in, or turned in after the due date
+-------------------------------------------------------------------
+Comments:
+
+Yeah, apply-begin isn't gonna cut it. It's beautiful how well the
+pattern works out, though, right?
+
+
+[`(let ([,v ,exp]) ,body) (value-of body
+				    (lambda (id)
+				      (if (eq? id v) (value-of exp env) (env id))))]
+
+
+Here's where your let is going wrong. You want to be implementing it
+in terms of let. Everytime you look up x, you're going to re-evaluate
+e. Which, if your expression has side-effects in it, you're not gonna
+wanna do.
+
+
+[`(set! ,v ,exp) (set! v (value-of exp env))]
+
+That's not gonna cut it, but I think we've talked about how to implement set!
+
+[`(let ((,x ,e)) ,b) (value-of b (lambda (var)
+                                    (if (eqv? x var)
+                                        (value-of e env)
+                                        (env var))))]
+Your let doesn't box values either.
+
+(define closure-fn
+  (lambda (x body env)
+    (lambda (a)
+      (value-of-fn body
+                   (extend-env-fn x a env)))))
+
+(define closure-ds
+  (lambda (x body env)
+    `(closure ,x ,body ,env)))
+(define apply-closure-ds
+  (lambda (cl)
+    (match cl
+      [`(closure ,x ,body ,env) (lambda (a) (value-of-ds body (extend-env-ds x a env)))])))
+
+What's with these?
+
+(define apply-env-fn-fo-eulav
+  (lambda(env y)
+    (env y)))
+(define extend-env-fn-fo-eulav
+  (lambda (x a env)
+    (lambda (y) (if (eqv? x y) a (apply-env-fn-fo-eulav env y)))))
+
+(define closure-fn-fo-eulav
+  (lambda (x body env)
+    (lambda (a)
+      (fo-eulav body
+                   (extend-env-fn-fo-eulav x a env)))))
+
+Notice you don't have to create new helpers for these. You're
+implementing the same semantics, but just with a different syntax.
+
+(define extend-env-lex
+  (lambda (a env)
+    (cons a env)))
+
+Can you think of a shorter way to write this? Maybe a function that
+takes an argument and a term, and conses the argument onto the term?
+I'll give you a hint, it has four letters.
+
+(define apply-env-lex
+  (lambda (env num)
+    (cond
+      [(zero? num) (car env)]       
+      [else (apply-env-lex (cdr env) (- num 1))])))
+
+This isn't a naturally recursive implementation. Can you think of
+something like this that we've written, that has a naturally recursive
+implementation? Hmm...?
+
+-------------------------------------------------------------------
+--------------------
+A3 > set! > value-of 3
+value-of 3
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+6
+5
+expected:   5
+tested:     (value-of (quote ((lambda (x) (begin2 (set! x 5) x)) 6)) (lambda (y) (error (quote value-of) "unbound variable ~s" y)))
+Check failure
+--------------------
+--------------------
+A3 > set! > value-of 4
+value-of 4
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+3
+4
+expected:   4
+tested:     (value-of (quote (let ((a 3)) (begin2 (begin2 a (set! a 4)) a))) (lambda (y) (error (quote value-of) "unbound variable ~s" y)))
+Check failure
+--------------------
+--------------------
+A3 > set! > value-of 6
+value-of 6
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+97
+0
+expected:   0
+tested:     (value-of (quote ((lambda (x) (begin2 ((lambda (y) (begin2 (set! x 0) 98)) 99) x)) 97)) (lambda (y) (error (quote value-of) "unbound variable ~s" y)))
+Check failure
+--------------------
+--------------------
+A3 > set! > value-of 7
+value-of 7
+FAILURE
+name:       check
+location:   autograde-lib/autograde.rkt:487:12
+params:     #<procedure:equal?>
+5
+4
+expected:   4
+tested:     (value-of (quote (let ((a 5)) (let ((y (begin2 (set! a (sub1 a)) 6))) (begin2 (* y y) a)))) (lambda (y) (error (quote value-of) "unbound variable ~s" y)))
+Check failure
+--------------------
+--------------------
+A3 > church numerals > csub1 undefined
+csub1 undefined
+FAILURE
+name:       check-not-exn
+location:   autograde-lib/autograde.rkt:466:16
+params:     #<procedure:temp553>
+Check failure
+--------------------
+56 success(es) 5 failure(s) 0 error(s) 61 test(s) run
